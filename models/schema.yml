@@ -1,0 +1,34 @@
+version: 2
+sources:
+  - name: dbt_meder_bike
+    tables:
+      - name: bike_duration
+      - name: bike_is_winner
+
+models:
+  - name: bike_duration
+    config:
+      materialized: table
+    columns:
+      - name: trip_count_last_week
+      - name: trip_duration_last_week
+      - name: user_id
+      - name: start_date
+    meta:
+      fal:
+        feature_store:
+          entity_id: bike_id
+          timestamp: start_date
+
+  - name: bike_is_winner
+    config:
+      materialized: table
+    columns:
+      - name: bike_id
+      - name: date
+      - name: is_winner
+    meta:
+      fal:
+        feature_store:
+          entity_id: bike_id
+          timestamp: date
