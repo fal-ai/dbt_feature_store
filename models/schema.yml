@@ -4,6 +4,9 @@ sources:
     tables:
       - name: bike_duration
       - name: bike_is_winner
+  - name: samples
+    tables:
+      - name: bike_dataset_labels_maintenance_required
 
 models:
   - name: bike_duration
