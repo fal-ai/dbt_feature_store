@@ -3,22 +3,17 @@
         label_table_model,
         label_name
     ) %}
-    {% set feature_columns = ["trip_count_last_week", "trip_duration_last_week"] %}
-    {% set ns = namespace(
-        label_table_timestamp_column = "",
-        label_table_entity_id_column = ""
-    ) %}
-    {% if execute %}
-        {% for node in graph.nodes.values() %}
-            {% if node.unique_id == "model.my_new_project." + label_table_model %}
-                {% do log(
-                    node,
-                    info = true
-                ) %}
-                {% set ns.label_table_timestamp_column = node.config.meta.fal.feature_store.timestamp %}
-                {% set ns.label_table_entity_id_column = node.config.meta.fal.feature_store.entity_id %}
-            {% endif %}
-        {% endfor %}
+{% set feature_columns = ["trip_count_last_week", "trip_duration_last_week"] %}
+{% set ns = namespace(
+    label_table_timestamp_column = "",
+    label_table_entity_id_column = ""
+) %}
+{% if execute %}
+    {% set node = graph.nodes["model.my_new_project." + label_table_model] %}
+    {% do log(node, info=true) %}
+    {% set ns.label_table_timestamp_column = node.config.meta.fal.feature_store.timestamp %}
+    {% set ns.label_table_entity_id_column = node.config.meta.fal.feature_store.entity_id %}
+
     SELECT
         lb.{{ ns.label_table_entity_id_column }},
         lb.{{ ns.label_table_timestamp_column }},

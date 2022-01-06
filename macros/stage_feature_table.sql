@@ -11,17 +11,13 @@
         label_entity_id_column = ""
     ) %}
     {% if execute %}
-        {% for node in graph.nodes.values() %}
-            {% if node.unique_id == "model.my_new_project." + feature_table_model %}
-                {% set ns.timestamp_column = node.config.meta.fal.feature_store.timestamp %}
-                {% set ns.entity_id_column = node.config.meta.fal.feature_store.entity_id %}
-            {% endif %}
+        {% set node = graph.nodes["model.my_new_project." + feature_table_model] %}
+        {% set ns.timestamp_column = node.config.meta.fal.feature_store.timestamp %}
+        {% set ns.entity_id_column = node.config.meta.fal.feature_store.entity_id %}
 
-            {% if node.unique_id == "model.my_new_project." + label_table_model %}
-                {% set ns.label_timestamp_column = node.config.meta.fal.feature_store.timestamp %}
-                {% set ns.label_entity_id_column = node.config.meta.fal.feature_store.entity_id %}
-            {% endif %}
-        {% endfor %}
+        {% set node = graph.nodes["model.my_new_project." + label_table_model] %}
+        {% set ns.label_timestamp_column = node.config.meta.fal.feature_store.timestamp %}
+        {% set ns.label_entity_id_column = node.config.meta.fal.feature_store.entity_id %}
 
         WITH __f__most_recent AS (
             {{ next_avaliable(
