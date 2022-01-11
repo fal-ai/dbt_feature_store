@@ -20,11 +20,11 @@
         {% set ns.label_entity_id_column = node.config.meta.fal.feature_store.entity_id %}
 
         WITH __f__most_recent AS (
-            {{ next_avaliable(
-                feature_table_model,
-                feature_columns,
+            {{ next_available(
+                ref(feature_table_model),
+                ns.entity_id_column,
                 ns.timestamp_column,
-                ns.entity_id_column
+                feature_columns
             ) }}
         )
     SELECT
