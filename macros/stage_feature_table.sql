@@ -38,17 +38,11 @@
     FROM
         {{ ref(label_table_model) }} AS lb
         LEFT JOIN __f__most_recent AS mr
-        ON CAST(
-            lb.{{ ns.label_entity_id_column }} AS STRING
-        ) = mr.f_bike_id
-        AND mr.__f__timestamp < CAST(
-            lb.{{ ns.label_timestamp_column }} AS TIMESTAMP
-        )
+        ON cast(lb.{{ ns.label_entity_id_column }} AS STRING) = mr.__f__entity
+        AND mr.__f__timestamp < cast(lb.{{ ns.label_timestamp_column }} AS TIMESTAMP)
         AND (
             mr.__f__next_time IS NULL
-            OR CAST(
-                lb.{{ ns.label_timestamp_column }} AS TIMESTAMP
-            ) <= mr.__f__next_time
+            OR cast(lb.{{ ns.label_timestamp_column }} AS TIMESTAMP) <= mr.__f__next_time
         )
     {% endif %}
 {% endmacro %}
