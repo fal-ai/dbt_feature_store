@@ -1,7 +1,3 @@
-{{ config(
-    materialized = 'table',
-) }}
-
 WITH duration AS (
     SELECT
         bike_id,
@@ -15,7 +11,7 @@ WITH duration AS (
         {{ ref("bike_duration") }}
     WHERE
         -- NOTE: Offer users an opportunity to sanitize
-        bike_id IS NOT NULL
+        start_date > timestamp('2020-01-01')
 ), maintenance AS (
     SELECT
         bike_id,
@@ -23,38 +19,35 @@ WITH duration AS (
         {{ next_timestamp("bike_id", "timestamp") }} AS next_timestamp,
     FROM
         {{ ref("bike_maintenance") }}
-), lb AS (
+), label AS (
     SELECT
         bike_id,
-        cast(date AS timestamp) AS date,
+        date,
         is_winner
-    FROM
-        {{ ref("bike_is_winner") }}
+    FROM {{ ref("bike_is_winner") }}
 )
 SELECT
-    lb.bike_id,
-
-    lb.date AS label_date,
-    lb.is_winner,
-
-    duration.start_date AS trip_start_date,
     duration.trip_count_last_week,
     duration.trip_duration_last_week,
 
-    maintenance.timestamp AS maintenance_timestamp
-FROM lb
+    maintenance.timestamp AS maintenance_timestamp,
+
+    label.is_winner,
+    label.bike_id,
+    label.date AS label_date
+FROM label
 LEFT JOIN duration
     ON {{ label_feature_join(
-            "lb.bike_id",
-            "lb.date",
+            "label.bike_id",
+            "label.date",
             "duration.bike_id",
             "duration.start_date",
             "duration.next_start_date"
         ) }}
 LEFT JOIN maintenance
     ON {{ label_feature_join(
-            "lb.bike_id",
-            "lb.date",
+            "label.bike_id",
+            "label.date",
             "maintenance.bike_id",
             "maintenance.timestamp",
             "maintenance.next_timestamp"
