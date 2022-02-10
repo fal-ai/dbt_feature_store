@@ -8,7 +8,7 @@ WITH cte_bike_maintenance AS (
 )
 SELECT * 
 FROM (
-{{ create_dataframe(
+{{ create_dataset(
     {
         'table': source('dbt_meder_bike', 'bike_is_winner'),
         'columns': ['is_winner']

@@ -11,12 +11,12 @@ WITH duration AS (
         {{ ref("bike_duration") }}
     WHERE
         -- NOTE: Offer users an opportunity to sanitize
-        start_date > timestamp('2020-01-01')
+        start_date > date('2020-01-01')
 ), maintenance AS (
     SELECT
         bike_id,
-        timestamp,
-        {{ next_timestamp("bike_id", "timestamp") }} AS next_timestamp,
+        cast(timestamp AS date) AS date,
+        {{ next_timestamp("bike_id", "cast(timestamp AS date)") }} AS next_date,
     FROM
         {{ ref("bike_maintenance") }}
 ), label AS (
@@ -24,13 +24,13 @@ WITH duration AS (
         bike_id,
         date,
         is_winner
-    FROM {{ ref("bike_is_winner") }}
+    FROM {{ source("dbt_meder_bike", "bike_is_winner") }}
 )
 SELECT
     duration.trip_count_last_week,
     duration.trip_duration_last_week,
 
-    maintenance.timestamp AS maintenance_timestamp,
+    maintenance.date AS maintenance_date,
 
     label.is_winner,
     label.bike_id,
@@ -49,6 +49,6 @@ LEFT JOIN maintenance
             "label.bike_id",
             "label.date",
             "maintenance.bike_id",
-            "maintenance.timestamp",
-            "maintenance.next_timestamp"
+            "maintenance.date",
+            "maintenance.next_date"
         ) }}
