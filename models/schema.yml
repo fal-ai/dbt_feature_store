@@ -4,6 +4,11 @@ sources:
     tables:
       - name: bike_duration
       - name: bike_is_winner
+        meta:
+          fal:
+            feature_store:
+              entity_column: bike_id
+              timestamp_column: date
   - name: samples
     tables:
       - name: bike_dataset_labels_maintenance_required
@@ -15,23 +20,10 @@ models:
     columns:
       - name: trip_count_last_week
       - name: trip_duration_last_week
-      - name: user_id
+      - name: bike_id
       - name: start_date
     meta:
       fal:
         feature_store:
-          entity_id: bike_id
-          timestamp: start_date
-
-  - name: bike_is_winner
-    config:
-      materialized: table
-    columns:
-      - name: bike_id
-      - name: date
-      - name: is_winner
-    meta:
-      fal:
-        feature_store:
-          entity_id: bike_id
-          timestamp: date
+          entity_column: bike_id
+          timestamp_column: start_date
