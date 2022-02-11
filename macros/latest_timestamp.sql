@@ -1,19 +1,17 @@
-{% macro latest_timestamp(
-        feature_table,
-        entity_column,
-        timestamp_column,
-        feature_columns=['*']
-    ) %}
+{% macro latest_timestamp(feature) %}
+
+{% do __f__load_meta(feature) %}
+
 WITH __f__latest_timestamp AS (
     SELECT
         *,
-        {{ entity_column }} AS __f__entity,
-        {{ timestamp_column }} AS __f__timestamp,
-        {{ next_timestamp(entity_column, timestamp_column) }} AS __f__next_timestamp
-    FROM {{ feature_table }}
+        {{ feature.entity_column }} AS __f__entity,
+        {{ feature.timestamp_column }} AS __f__timestamp,
+        {{ next_timestamp(feature.entity_column, feature.timestamp_column) }} AS __f__next_timestamp
+    FROM {{ feature.table }}
 )
 SELECT
-    {% for column in feature_columns %}
+    {% for column in feature.columns %}
     {{ column }},
     {% endfor %}
     __f__entity,
