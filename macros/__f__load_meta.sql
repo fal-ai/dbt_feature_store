@@ -1,5 +1,5 @@
 {% macro __f__load_meta(obj) %}
-{% if __f__is_relation(obj) %}
+{% if feature_store.__f__is_relation(obj) %}
     {# Find the meta of the `obj` relation #}
     {# Try in models #}
     {% set nodes = graph.nodes.values()
@@ -29,9 +29,9 @@
     {% endfor %}
 {% endif %}
 
-{% do __f__assert_has_attr(obj, 'entity_column') %}
-{% do __f__assert_has_attr(obj, 'timestamp_column') %}
-{% do __f__assert_has_attr(obj, 'columns') %}
+{% do feature_store.__f__assert_has_attr(obj, 'entity_column') %}
+{% do feature_store.__f__assert_has_attr(obj, 'timestamp_column') %}
+{% do feature_store.__f__assert_has_attr(obj, 'columns') %}
 {% endmacro %}
 
 {% macro __f__assert_has_attr(obj, name) %}

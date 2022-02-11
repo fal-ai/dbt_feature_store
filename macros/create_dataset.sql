@@ -8,9 +8,9 @@
 {% endif %}
 
 {# Load and assert we have necessary attributes #}
-{% do __f__load_meta(label) %}
+{% do feature_store.__f__load_meta(label) %}
 {% for feature in features %}
-    {% do __f__load_meta(feature) %}
+    {% do feature_store.__f__load_meta(feature) %}
 {% endfor %}
 
 WITH __f__label AS (
@@ -41,7 +41,7 @@ WITH __f__label AS (
 
             {{ feature.entity_column }} AS __f__entity_column,
             {{ feature.timestamp_column }} AS __f__timestamp_column,
-            {{ next_timestamp(
+            {{ feature_store.next_timestamp(
                 feature.entity_column,
                 feature.timestamp_column
             ) }} AS __f__next_timestamp
@@ -69,7 +69,7 @@ FROM __f__label
 
 {% for feature in features %}
 LEFT JOIN {{ feature.__f__cte_name }}
-    ON {{ label_feature_join(
+    ON {{ feature_store.label_feature_join(
             '__f__label.__f__entity_column',
             '__f__label.__f__timestamp_column',
             feature.__f__cte_name + '.__f__entity_column',

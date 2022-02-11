@@ -1,13 +1,16 @@
 {% macro latest_timestamp(feature) %}
 
-{% do __f__load_meta(feature) %}
+{% do feature_store.__f__load_meta(feature) %}
 
 WITH __f__latest_timestamp AS (
     SELECT
         *,
         {{ feature.entity_column }} AS __f__entity,
         {{ feature.timestamp_column }} AS __f__timestamp,
-        {{ next_timestamp(feature.entity_column, feature.timestamp_column) }} AS __f__next_timestamp
+        {{ feature_store.next_timestamp(
+            feature.entity_column,
+            feature.timestamp_column
+        ) }} AS __f__next_timestamp
     FROM {{ feature.table }}
 )
 SELECT
