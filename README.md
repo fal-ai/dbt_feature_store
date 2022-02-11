@@ -16,7 +16,7 @@
       * [label_feature_join (<a href="/macros/label_feature_join.sql">source</a>)](#label_feature_join-source)
 * [feature_table object](#feature_table-object)
 
-<!-- Added by: runner, at: Fri Feb 11 15:33:26 UTC 2022 -->
+<!-- Added by: runner, at: Fri Feb 11 20:14:46 UTC 2022 -->
 
 <!--te-->
 
