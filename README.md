@@ -39,9 +39,9 @@ Trigger feature calculations from the fal Python client to quickly iterate and d
 
 # Macros
 
-## Plug-n-play Macros
-
 ### create_dataset ([source](/macros/create_dataset.sql))
+
+This macro creates a table that holds the label and the historical features. This table should be ready to be used as training data without any additional transformations
 
 Constructor: `feature_store.create_dataset(label, features)`
 
@@ -72,12 +72,14 @@ FROM (
 
 ### latest_timestamp ([source](/macros/latest_timestamp.sql))
 
+This macro creates a table with a only latest timestamp rows of a feature, this is useful to make predictions with the latest information available for an entity.
+
 Constructor: `feature_store.latest_timestamp(feature)`
 
 - `feature`: [feature_table object](#feature_table-object)
 
 
-## Building blocks Macros
+## Building block Macros
 
 ### next_timestamp ([source](/macros/next_timestamp.sql))
 
