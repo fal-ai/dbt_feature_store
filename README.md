@@ -2,6 +2,22 @@
 
 <!--This table of contents is automatically generated. Any manual changes between the ts and te tags will be overridden!-->
 <!--ts-->
+* [dbt_feature_store](#dbt_feature_store)
+* [About](#about)
+* [Usage](#usage)
+   * [Inside of dbt Models](#inside-of-dbt-models)
+   * [From fal client (coming soon)](#from-fal-client-coming-soon)
+* [Macros](#macros)
+   * [Plug-n-play Macros](#plug-n-play-macros)
+      * [create_dataset (<a href="/macros/create_dataset.sql">source</a>)](#create_dataset-source)
+      * [latest_timestamp (<a href="/macros/latest_timestamp.sql">source</a>)](#latest_timestamp-source)
+   * [Building blocks Macros](#building-blocks-macros)
+      * [next_timestamp (<a href="/macros/next_timestamp.sql">source</a>)](#next_timestamp-source)
+      * [label_feature_join (<a href="/macros/label_feature_join.sql">source</a>)](#label_feature_join-source)
+* [feature_table object](#feature_table-object)
+
+<!-- Added by: runner, at: Fri Feb 11 15:33:26 UTC 2022 -->
+
 <!--te-->
 
 # About
