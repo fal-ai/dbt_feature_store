@@ -22,7 +22,7 @@
 
 # About
 
-This packages contains macros to help you build your feature store right in dbt.
+This package contains dbt macros to help you build a feature store right within your dbt repository.
 
 # Usage
 
@@ -30,12 +30,11 @@ This packages contains macros to help you build your feature store right in dbt.
 
 > **NOTE:** to see a full example of the package in use, go to [dbt_feature_store_example](https://github.com/fal-ai/dbt_feature_store_example)
 
-You can models with these macros to maintain a feature store updated with your dbt runs.
+You can build models with these macros to maintain a feature store updated with your dbt runs.
 
 ## From fal client (coming soon)
 
-Trigger feature store calculations from a the fal client to iterate and test possible
-features of interest before comitting with any specific one.
+Trigger feature calculations from the fal Python client to quickly iterate and discover the best features for your ML model from your notebook.
 
 
 # Macros
@@ -91,10 +90,10 @@ Constructor: `feature_store.next_timestamp(entity_column, timestamp_column)`
 
 Constructor: `feature_store.label_feature_join(label_entity_column, label_timestamp_column, feature_entity_column, feature_timestamp_column, feature_next_timestamp_column)`
 
-- `label_entity_column`: column name of id of rows for joining a label tables and feature tables
-- `label_timestamp_column`: column name of timestamp/date of rows for joining a label tables and feature tables
-- `feature_entity_column`: column name of id of rows for joining a label tables and feature tables
-- `feature_timestamp_column`: column name of timestamp/date of rows for joining a label tables and feature tables
+- `label_entity_column`: column name of the entity id that is used for predictions, this column is used to join labels to features
+- `label_timestamp_column`: column name of the timestamp/date, this column is used to join labels to features
+- `feature_entity_column`: column name of the entity id that is used for predictions, this column is used to join labels to features
+- `feature_timestamp_column`: column name of the timestamp/date, this column is used to join labels to features
 - `feature_next_timestamp_column`: column pre-calculated (normally in a CTE) with the call of the macro [feature_store.next_timestamp(feature_entity_column, feature_timestamp_column)](#next_timestamp)
 
 
@@ -104,8 +103,8 @@ A feature_table object is a Python dict with the following properties:
 
 - `table`: a `ref`, `source` or name of a CTE defined in the query
 - `columns`: a list of columns from the label relation to appear in the final query
-- `entity_column` (optional): column name of id of rows for joining a label tables and feature tables
-- `timestmap_column` (optional): column name of timestamp/date of rows for joining a label tables and feature tables
+- `entity_column` (optional): column name of the entity id that is used for predictions, this column is used to join labels to features
+- `timestmap_column` (optional): column name of the timestamp/date, this column is used to join labels to features
 
 If you pass a [ref](https://docs.getdbt.com/reference/dbt-jinja-functions/ref/) or [source](https://docs.getdbt.com/reference/dbt-jinja-functions/source/) in the `table` property, you can skip the `entity_column` and `timestamp_column` properties, as they will be loaded from the [schema.yml](https://docs.getdbt.com/reference/resource-properties/schema) `meta` for models or sources.
 
