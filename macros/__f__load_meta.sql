@@ -1,4 +1,8 @@
 {% macro __f__load_meta(obj) %}
+{% if not execute %}
+    {{ return(obj) }}
+{% endif %}
+
 {% if feature_store.__f__is_relation(obj) %}
     {# Find the meta of the `obj` relation #}
     {# Try in models #}
