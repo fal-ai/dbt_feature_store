@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: zendesk_ticket_data
+    description: zendesk ticket data
+    columns:
+      - name: id
+      - name: created_at
+      - name: description
+      - name: priority
+      - name: subject
+      - name: submitter_id
+      - name: url
+      - name: system_client
+    config:
+      materialized: table
+    meta:
+      fal:
+        feature_store:
+          entity_column: id
+          timestamp_column: created_at
+        scripts:
+          after:
+            - fal_scripts/test.py
+  - name: zendesk_sentiment
+    description: zendesk sentiment
+    columns:
+      - name: id
+      - name: score
+      - name: calc_date
+      - name: is_positive
+    config:
+      materialized: table
+    meta:
+      fal:
+        feature_store:
+          entity_column: id
+          timestamp_column: calc_date
+        scripts:
+          after:
+            - fal_scripts/test.py
+  - name: latest_ticket_data
+    description: Latest ticket data
+    config:
+      materialized: table
+    meta:
+      fal:
+        scripts:
+          after:
+            - fal_scripts/test.py
+  - name: ticket_sentiment_dataset
+    description: Dataset with calculated sentiment data
+    config:
+      materialized: table
+    meta:
+      fal:
+        scripts:
+          after:
+            - fal_scripts/test.py
