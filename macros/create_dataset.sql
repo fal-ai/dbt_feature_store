@@ -55,16 +55,12 @@ SELECT
         {% endfor %}
     {% endfor %}
 
-    {% for column in label.columns %}
+    {% for column in label.columns | reject("in", [label.entity_column, label.timestamp_column]) %}
         __f__label.{{ column }},
     {% endfor %}
 
-    {% if label.entity_column not in label.columns %}
-        __f__label.__f__entity_column AS {{ label.entity_column }},
-    {% endif %}
-    {% if label.timestamp_column not in label.columns %}
-        __f__label.__f__timestamp_column AS {{ label.timestamp_column }},
-    {% endif %}
+    __f__label.__f__entity_column AS {{ label.entity_column }},
+    __f__label.__f__timestamp_column AS {{ label.timestamp_column }}
 FROM __f__label
 
 {% for feature in features %}
