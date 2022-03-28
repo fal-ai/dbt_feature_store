@@ -3,7 +3,7 @@ import os
 
 def before_all(context):
     os.system("mkdir mock/temp")
-    os.system("dbt seed --profiles-dir mock --project-dir mock")
+    os.system("cd mock && dbt seed --profiles-dir .")
 
 
 def after_all(context):
