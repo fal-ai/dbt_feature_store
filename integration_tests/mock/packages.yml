@@ -1,0 +1,4 @@
+packages:
+  - package: fal-ai/feature_store
+    version: 0.1.0
+

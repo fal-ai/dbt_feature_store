@@ -54,6 +54,9 @@ models:
       materialized: table
     meta:
       fal:
+        feature_store:
+          entity_column: submitter_id
+          timestamp_column: calc_date
         scripts:
           after:
             - fal_scripts/test.py
