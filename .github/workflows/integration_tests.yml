@@ -14,8 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         python: ["3.8.x"]
-        # TODO: change to 1.0.1 when available
-        dbt: ["0.20.1", "0.21.1", "1.0.1rc1"]
+        dbt: ["1.0.4"]
 
     steps:
       - uses: actions/checkout@v2
@@ -24,22 +23,13 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Fix jinja
-        run: |
-          pip install markupsafe==2.0.1
-
       - name: Install fal
         run: |
           pip install fal
 
       - name: Install dbt
         run: |
-          if [[ '${{ matrix.dbt }}' =~ ^0.*$ ]]
-          then
-            pip install dbt==${{ matrix.dbt }}
-          else
-            pip install dbt-postgres==${{ matrix.dbt }}
-          fi
+          pip install dbt-postgres==${{ matrix.dbt }}
 
       - name: Install dbt packages
         run: |
