@@ -1,0 +1,12 @@
+Model name: ticket_sentiment_dataset
+                                                                                               description   submitter_id  is_positive       id           calc_date
+0  I think this is the 5th one I've purchased. I'm working on getting one in every room of my house. I ...  396331237134a          1.0   1595.0 2021-02-19 01:54:55
+1                                                                                I love it, wife hates it.   419755385214          1.0  11071.0 2021-12-23 00:19:23
+2  Love it! I’ve listened to songs I haven’t heard since childhood! I get the news, weather, informatio...  1500656884401          1.0  16988.0 2021-10-29 12:03:02
+3                                                                                      Huge disappointment   402862357193          0.0   4721.0 2021-08-29 18:06:36
+4                                                                                She doesn’t always listen   402813302773          0.0   1966.0 2021-02-28 06:05:08
+5                                                             Full display not working in all application.   410930434074          0.0   6605.0 2021-08-28 23:09:52
+6                                                                                  Some major design flaws   403125197514          0.0   1404.0 2021-02-13 21:43:58
+7                                          I sent it to my 85 year old Dad, and he talks to it constantly.   424883466453          1.0  14173.0 2021-04-21 14:31:46
+8                 nice hotel expensive parking got good deal stay hotel anniversary, arrived late evening    410930434074          1.0   6171.0 2021-05-18 17:50:31
+9  I was a little nervous when I received my new Echo as I'm not really Tech savvy. I found it a bit in...  396331237134a          0.0  11013.0 2021-05-27 22:29:50
