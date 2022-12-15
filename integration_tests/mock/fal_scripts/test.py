@@ -1,12 +1,9 @@
-import io
+from fal.typing import *
+import pandas as pd
 
+assert context.current_model
 model_name = context.current_model.name
 
-output = f"Model name: {model_name}\n"
+df: pd.DataFrame = ref(model_name)
 
-df = ref(context.current_model.name)
-output += df.to_string()
-
-f = open(f"temp/{model_name}", "w")
-f.write(output)
-f.close()
+df.to_json(f"temp/{model_name}.json", date_format='epoch', double_precision=0, orient='values')

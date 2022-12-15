@@ -1,3 +1,4 @@
+import json
 import os
 from behave import *
 
@@ -33,13 +34,18 @@ def _run_command(command: str):
 
 
 def _check_output(model):
+    expected = "expected unread"
+    current = "current unread"
     try:
         print(f"Checking: {model}", flush=True)
-        expected = open(f"mock/fal_output/{model}_expected", "r").read()
-        current = open(f"mock/temp/{model}", "r").read()
+        with open(f"mock/output_expected/{model}.json", "r") as f:
+            expected = json.load(f)
+        with open(f"mock/temp/{model}.json", "r") as f:
+            current = json.load(f)
+
         assert expected == current
-    except AssertionError:
-        print(f"Error for {model}:", flush=True)
-        print(f"Expected: {expected}", flush=True)
-        print(f"Got: {current}", flush=True)
-        raise Exception("Did not get expected output")
+    except AssertionError as e:
+        print(f"Error for {model}", flush=True)
+        print(f"Expected:\n{expected}", flush=True)
+        print(f"Got:\n{current}", flush=True)
+        raise Exception("Did not get expected output") from e
