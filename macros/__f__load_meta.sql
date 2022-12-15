@@ -4,25 +4,22 @@
 {% endif %}
 
 {% if feature_store.__f__is_relation(obj) %}
+    {# Set default meta #}
+    {% set meta = {} %}
+
     {# Find the meta of the `obj` relation #}
-    {# Try in models #}
     {% set nodes = graph.nodes.values()
-            | selectattr("resource_type", "equalto", "model")
             | selectattr("database", "equalto", obj.table.database)
             | selectattr("schema", "equalto", obj.table.schema)
-            | selectattr("name", "equalto", obj.table.identifier)
+            | selectattr("alias", "equalto", obj.table.identifier)
             | list %}
+
     {% if nodes %}
-        {% set meta = nodes[0].config.meta %}
-    {% else %}
-        {# Try in sources #}
-        {% set nodes = graph.sources.values()
-            | selectattr("resource_type", "equalto", "source")
-            | selectattr("database", "equalto", obj.table.database)
-            | selectattr("schema", "equalto", obj.table.schema)
-            | selectattr("name", "equalto", obj.table.identifier)
-            | list %}
-        {% set meta = nodes[0].meta %}
+        {% if nodes[0].resource_type == "model" %}
+            {% set meta = nodes[0].config.meta %}
+        {% elif nodes[0].resource_type == "source" %}
+            {% set meta = nodes[0].meta %}
+        {% endif %}
     {% endif %}
 
     {# Populate any non-set properties available in the feature_store meta #}
